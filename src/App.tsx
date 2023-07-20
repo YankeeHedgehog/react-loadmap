@@ -1,34 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from 'react-router-dom'
+
+import SidebarIndex from './features/sidebar/Index'
+import Applications from './features/application/Applications'
+import Index from './pages/Index'
+import Counter from './features/counter/Counter'
+import Application from './features/application/Application'
+import Todos from './features/todos/Todos'
+import Timer from './features/timer/Timer'
+import Timer2 from './features/timer/Timer2'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Routes>
+      <Route path="" element={<Index />}>
+        <Route path="" element={<Applications />} />
+        <Route path="" element={<Application />}>
+          <Route path="counter" element={<Counter />} />
+          <Route path="todos" element={<Todos />} />
+          <Route path="timer" element={<Timer />} />
+          <Route path="timer2" element={<Timer2 />} />
+        </Route>
+      </Route>
+      <Route path="/sidebar" element={<SidebarIndex />} />
+    </Routes>
   )
 }
 
