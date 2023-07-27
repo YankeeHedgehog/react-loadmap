@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { TCurrentPage } from '../Sidebar'
+import { useNavigate } from 'react-router-dom'
 
 export type link = {
   id?: number
@@ -25,10 +26,18 @@ export default function SidebarButton({
   hasTitle = true,
   onClick,
 }: Props) {
+  const navigate = useNavigate()
+
   return (
     <button
-      css={[linkStyle(color), link.isActive && activeLinkStyle(color, bgcolor)]}
-      onClick={() => onClick && onClick(link.title)}
+      css={[
+        linkStyle(color, color),
+        link.isActive && activeLinkStyle(color, bgcolor),
+      ]}
+      onClick={() => {
+        onClick && onClick(link.title)
+        navigate(link.href)
+      }}
     >
       <span>{link.icon}</span>
       {hasTitle && <span css={linkTitleStyle}>{link.title}</span>}
@@ -36,12 +45,12 @@ export default function SidebarButton({
   )
 }
 
-const linkStyle = (color?: string) => css`
+const linkStyle = (activeColor?: string, bgcolor = 'white') => css`
   display: flex;
   align-items: center;
   padding: 1rem;
   width: 100%;
-  background: lightgray;
+  background: ${bgcolor};
   /* reset button css */
   border: none;
   cursor: pointer;
@@ -50,7 +59,7 @@ const linkStyle = (color?: string) => css`
   }
 
   &:hover {
-    color: ${color};
+    color: ${activeColor};
   }
 `
 

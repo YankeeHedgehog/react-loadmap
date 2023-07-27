@@ -9,8 +9,11 @@ import {
   AlignCenter,
 } from 'lucide-react'
 import SidebarButton, { link } from './components/SidebarButton'
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { css } from '@emotion/react'
+
+const bgcolor = 'lightgray'
+const maincolor = 'white'
 
 const topLink: link = {
   icon: <Apple />,
@@ -35,7 +38,11 @@ export type TCurrentPage =
   | 'Tags'
   | 'Settings'
 
-export default function Sidebar() {
+type Sidebar = {
+  children: ReactNode
+}
+
+export default function Sidebar({ children }: Sidebar) {
   const [currentPage, setCurrentPage] = useState<TCurrentPage>('Home')
   const [hasTitle, setHasTitle] = useState<boolean>(true)
 
@@ -43,55 +50,70 @@ export default function Sidebar() {
 
   return (
     <>
-      <aside css={sidebarStyle(!hasTitle)}>
-        <div css={sidebarInnerStyle}>
-          <div css={logoStyle}>
-            {hasTitle ? (
-              <>
-                <SidebarButton link={topLink} hasTitle={hasTitle} />
-                <X
-                  style={{ marginRight: '1rem' }}
-                  size={42}
+      <div css={containerStyle}>
+        <aside css={sidebarStyle(!hasTitle)}>
+          <div css={sidebarInnerStyle}>
+            <div css={logoStyle}>
+              {hasTitle ? (
+                <>
+                  <SidebarButton link={topLink} hasTitle={hasTitle} />
+                  <X
+                    style={{ marginRight: '1rem' }}
+                    size={42}
+                    onClick={toggleHasTitle}
+                  />
+                </>
+              ) : (
+                <AlignCenter
+                  style={{ padding: '1rem' }}
                   onClick={toggleHasTitle}
                 />
-              </>
-            ) : (
-              <AlignCenter
-                style={{ padding: '1rem' }}
-                onClick={toggleHasTitle}
-              />
-            )}
-          </div>
+              )}
+            </div>
 
-          <ul css={linkListStyle}>
-            {links.map((listItem) => (
-              <li key={listItem.id} css={linkListItemStyle}>
-                <SidebarButton
-                  link={{
-                    ...listItem,
-                    isActive: currentPage === listItem.title,
-                  }}
-                  color="red"
-                  bgcolor="white"
-                  hasTitle={hasTitle}
-                  onClick={setCurrentPage}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </aside>
+            <ul css={linkListStyle}>
+              {links.map((listItem) => (
+                <li key={listItem.id} css={linkListItemStyle}>
+                  <SidebarButton
+                    link={{
+                      ...listItem,
+                      isActive: currentPage === listItem.title,
+                    }}
+                    color={maincolor}
+                    bgcolor={bgcolor}
+                    hasTitle={hasTitle}
+                    onClick={setCurrentPage}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+        <div css={mainStyle(!hasTitle)}>{children}</div>
+      </div>
     </>
   )
 }
 
-const sidebarStyle = (isOpen?: boolean) => css`
-  background-color: lightgray;
-  width: ${isOpen ? 80 : 160}px;
+const containerStyle = css`
+  display: flex;
+  width: 100%;
   height: 100vh;
 `
 
+const mainStyle = (isOpen?: boolean) => css`
+  width: calc(100% - ${isOpen ? 80 : 160}px);
+`
+
+const sidebarStyle = (isOpen?: boolean) => css`
+  background-color: ${maincolor};
+  width: ${isOpen ? 80 : 160}px;
+  height: 100%;
+`
+
 const sidebarInnerStyle = css`
+  position: sticky;
+  top: 0px;
   padding-left: 1rem;
 `
 
