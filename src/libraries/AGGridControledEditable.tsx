@@ -1,4 +1,4 @@
-import { ColDef } from 'ag-grid-community'
+import { ColDef, RowClickedEvent } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import { useState } from 'react'
 
@@ -6,11 +6,13 @@ import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
 export default function AGGridControledEditable() {
-  // This repository show how to set editable state by rows.
+  /**
+   * This component show how to control editable state every rows.
+   */
 
   const [editable, setEditable] = useState(true)
-  const toggleEditable = (params: any) => setEditable(params.data.editable) // will use RowClickedEvent<TData> type, but this sample isn't needed ts cause to need CrosTown and I'm tierd those settings.
-  // [RowClickedEvent](https://www.ag-grid.com/javascript-data-grid/grid-events/#reference-selection-rowClicked)
+  const toggleEditable = (params: RowClickedEvent) =>
+    setEditable(params.data.editable)
 
   const columnDefs: ColDef[] = [
     { field: 'make' },
@@ -23,8 +25,8 @@ export default function AGGridControledEditable() {
     { make: 'editable', model: 'editable', price: 35000, editable: true },
     { make: 'editable', model: 'editable', price: 32000, editable: true },
     {
-      make: 'non editable',
-      model: 'non editable',
+      make: 'not editable',
+      model: 'not editable',
       price: 72000,
       editable: false,
     },
