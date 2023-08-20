@@ -12,6 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.7.17",
     "@emotion/react": "^11.11.1",
+    "ag-grid-react": "^30.0.6",
     "graphql": "^16.7.1",
     "lucide-react": "^0.258.0",
     "react": "^18.2.0",
