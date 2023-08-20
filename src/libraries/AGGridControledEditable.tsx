@@ -5,8 +5,7 @@ import { useState } from 'react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
-const AGGrid = () => {
-  // TODO: 役割がおかしいので名前の変更が必要
+export default function AGGridControledEditable() {
   // This repository show how to set editable state by rows.
 
   const [editable, setEditable] = useState(true)
@@ -21,9 +20,14 @@ const AGGrid = () => {
   columnDefs.forEach((columnDef) => (columnDef.editable = editable))
 
   const [rowData] = useState([
-    { make: 'Toyota', model: 'Celica', price: 35000, editable: true },
-    { make: 'Ford', model: 'Mondeo', price: 32000, editable: true },
-    { make: 'non editable', model: 'Boxster', price: 72000, editable: false },
+    { make: 'editable', model: 'editable', price: 35000, editable: true },
+    { make: 'editable', model: 'editable', price: 32000, editable: true },
+    {
+      make: 'non editable',
+      model: 'non editable',
+      price: 72000,
+      editable: false,
+    },
   ])
 
   return (
@@ -36,5 +40,3 @@ const AGGrid = () => {
     </div>
   )
 }
-
-export default AGGrid

@@ -12,6 +12,7 @@ import Timer2 from './features/timer/Timer2'
 import Todos from './features/todos/Todos'
 import Form from './form/Form'
 import AGGrid from './libraries/AGGrid'
+import AGGridControledEditable from './libraries/AGGridControledEditable'
 import Index from './pages/Index'
 
 const client = new ApolloClient({
@@ -38,6 +39,10 @@ function App() {
           />
           <Route path="libraries" element={<Application />}>
             <Route path="ag-grid" element={<AGGrid />} />
+            <Route
+              path="editable-ag-grid"
+              element={<AGGridControledEditable />}
+            />
             <Route path="todos" element={<Todos />} />
             <Route path="timer" element={<Timer />} />
             <Route path="timer2" element={<Timer2 />} />

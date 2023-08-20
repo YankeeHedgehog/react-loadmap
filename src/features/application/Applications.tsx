@@ -14,7 +14,7 @@ const Applications: FunctionComponent<ApplicationsProps> = ({
     <>
       <div css={applicationLayout}>
         {pages.map((page) => (
-          <ApplicationThumbnailCard {...page} />
+          <ApplicationThumbnailCard key={page.link} {...page} />
         ))}
       </div>
     </>
