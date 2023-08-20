@@ -1,6 +1,6 @@
+import { useEffect, useRef, useState, KeyboardEvent, ChangeEvent } from 'react'
 import { css } from '@emotion/react'
 import { Todo } from '../models/Todo'
-import { useEffect, useRef, useState, KeyboardEvent, ChangeEvent } from 'react'
 
 type TodoListItem = {
   todo: Todo
