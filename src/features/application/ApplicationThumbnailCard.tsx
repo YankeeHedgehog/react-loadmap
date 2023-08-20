@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import { FC } from 'react'
 
-interface ApplicationThumbnailCardProps {
+export interface ApplicationThumbnailCardProps {
   imgUrl?: string
   title?: string
   link?: string
