@@ -1,27 +1,35 @@
-import { ColDef, RowClickedEvent } from 'ag-grid-community'
+import { ColDef, EditableCallbackParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import { useState } from 'react'
 
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
+type TRow = {
+  make: string
+  model: string
+  price: number
+  editable: boolean
+}
+
 export default function AGGridControledEditable() {
   /**
    * This component show how to control editable state every rows.
    */
 
-  const [editable, setEditable] = useState(true)
-  const toggleEditable = (params: RowClickedEvent) =>
-    setEditable(params.data.editable)
+  const editableColumnCallback = (params: EditableCallbackParams<TRow>) =>
+    params.data?.editable || false
 
   const columnDefs: ColDef[] = [
-    { field: 'make' },
-    { field: 'model' },
-    { field: 'price' },
+    { field: 'make', editable: editableColumnCallback },
+    { field: 'model', editable: editableColumnCallback },
+    {
+      field: 'price',
+      editable: editableColumnCallback,
+    },
   ]
-  columnDefs.forEach((columnDef) => (columnDef.editable = editable))
 
-  const [rowData] = useState([
+  const [rowData] = useState<TRow[]>([
     { make: 'editable', model: 'editable', price: 35000, editable: true },
     { make: 'editable', model: 'editable', price: 32000, editable: true },
     {
@@ -34,11 +42,7 @@ export default function AGGridControledEditable() {
 
   return (
     <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
-      <AgGridReact
-        rowData={rowData}
-        columnDefs={columnDefs}
-        onCellClicked={(params) => toggleEditable(params)}
-      ></AgGridReact>
+      <AgGridReact rowData={rowData} columnDefs={columnDefs}></AgGridReact>
     </div>
   )
 }
