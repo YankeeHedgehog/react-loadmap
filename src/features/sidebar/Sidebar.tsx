@@ -1,16 +1,16 @@
-import {
-  Apple,
-  Home,
-  User,
-  FileText,
-  Tag,
-  Settings,
-  X,
-  AlignCenter,
-} from 'lucide-react'
-import SidebarButton, { link } from './components/SidebarButton'
-import { ReactNode, useState } from 'react'
 import { css } from '@emotion/react'
+import {
+  AlignCenter,
+  Apple,
+  BookCopy,
+  FileText,
+  Home,
+  Settings,
+  Tag,
+  X,
+} from 'lucide-react'
+import { ReactNode, useState } from 'react'
+import SidebarButton, { link } from './components/SidebarButton'
 
 const bgcolor = 'lightgray'
 const maincolor = 'white'
@@ -23,17 +23,23 @@ const topLink: link = {
 }
 
 const links: link[] = [
-  { id: 1, icon: <Home />, title: 'Home', href: '', isActive: false },
-  { id: 2, icon: <User />, title: 'Profile', href: '', isActive: false },
-  { id: 3, icon: <FileText />, title: 'Docs', href: '', isActive: false },
+  { id: 1, icon: <Home />, title: 'Apps', href: 'apps', isActive: false },
+  {
+    id: 2,
+    icon: <BookCopy />,
+    title: 'Libraries',
+    href: 'libraries',
+    isActive: false,
+  },
+  { id: 3, icon: <FileText />, title: 'Docs', href: 'docs', isActive: false },
   { id: 4, icon: <Tag />, title: 'Tags', href: '', isActive: false },
   { id: 5, icon: <Settings />, title: 'Settings', href: '', isActive: false },
 ]
 
 export type TCurrentPage =
   | 'App'
-  | 'Home'
-  | 'Profile'
+  | 'Apps'
+  | 'Libraries'
   | 'Docs'
   | 'Tags'
   | 'Settings'
@@ -43,7 +49,8 @@ type Sidebar = {
 }
 
 export default function Sidebar({ children }: Sidebar) {
-  const [currentPage, setCurrentPage] = useState<TCurrentPage>('Home')
+  const [currentPage, setCurrentPage] = useState<TCurrentPage>('Apps')
+
   const [hasTitle, setHasTitle] = useState<boolean>(true)
 
   const toggleHasTitle = () => setHasTitle((hasTitle) => !hasTitle)
