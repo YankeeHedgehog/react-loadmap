@@ -13,6 +13,7 @@ import Todos from './features/todos/Todos'
 import Form from './form/Form'
 import AGGrid from './libraries/AGGrid'
 import AGGridControledEditable from './libraries/AGGridControledEditable'
+import Exif from './libraries/Exif'
 import Index from './pages/Index'
 
 const client = new ApolloClient({
@@ -43,10 +44,7 @@ function App() {
               path="editable-ag-grid"
               element={<AGGridControledEditable />}
             />
-            <Route path="todos" element={<Todos />} />
-            <Route path="timer" element={<Timer />} />
-            <Route path="timer2" element={<Timer2 />} />
-            <Route path="form" element={<Form />} />
+            <Route path="exif" element={<Exif />} />
           </Route>
         </Route>
         <Route path="/sidebar" element={<SidebarIndex />} />

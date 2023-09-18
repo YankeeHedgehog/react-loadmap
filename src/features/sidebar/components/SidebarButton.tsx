@@ -1,7 +1,7 @@
-import { ReactNode } from 'react'
 import { css } from '@emotion/react'
-import { TCurrentPage } from '../Sidebar'
+import { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { TCurrentPage } from '../Sidebar'
 
 export type link = {
   id?: number
@@ -59,7 +59,7 @@ const linkStyle = (activeColor?: string, bgcolor = 'white') => css`
   }
 
   &:hover {
-    color: ${activeColor};
+    color: gray;
   }
 `
 
