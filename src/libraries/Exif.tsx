@@ -1,27 +1,39 @@
 import loadImage from 'blueimp-load-image'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 export default function Exif() {
-  const uploadFile = (e: ChangeEvent<HTMLInputElement>) => {
+  const [fileInputed, setFileInputed] = useState<File>()
+  const [gpsGeoInfo, setGpsGeoInfo] = useState<GpsGeoInfoType>()
+  const uploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return
-
     const file = e.target.files[0]
-
-    // show files geo infomation
-    loadImage(
-      file,
-      function (img: any, data: any) {
-        console.log(img)
-        var exif = img.exif
-        var thumbnail = exif && exif.get('Thumbnail')
-        // if (!img.imageHead) return
-        // console.log(img.exif.get('Latitude'))
-        console.log(exif)
-        console.log(thumbnail)
-      },
-      { maxWidth: 600 }
-    )
+    setFileInputed(file)
   }
 
-  return <input type="file" onChange={uploadFile} accept="image/jpeg" />
+  const getGpsInfoByImage = (file?: File) => {
+    if (!file) return
+    loadImage.parseMetaData(file, (data) => {
+      const gpsInfo = data.exif?.get('GPSInfo')
+      if (!gpsInfo) return
+      const gpsLatitude = Object(gpsInfo).get('GPSLatitude')
+      const gpsLongitude = Object(gpsInfo).get('GPSLongitude')
+      console.log(gpsLatitude, gpsLongitude)
+      setGpsGeoInfo({ latitude: gpsLatitude, longitude: gpsLongitude })
+    })
+  }
+  getGpsInfoByImage(fileInputed)
+
+  return (
+    <>
+      <input type="file" onChange={uploadImage} accept="image/jpeg" />
+      <h2>Photo infomation</h2>
+      <p>Latitude: {gpsGeoInfo?.latitude}</p>
+      <p>Logtitude: {gpsGeoInfo?.longitude}</p>
+    </>
+  )
+}
+
+type GpsGeoInfoType = {
+  latitude: any
+  longitude: any
 }
